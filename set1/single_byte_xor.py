@@ -22,5 +22,5 @@ def find_most_frequent(str1):
     f = sorted(d, key=d.get)
     return f[len(f)-1]
 
-#str2 = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
-#print single_byte_xor(str2, chr(ord(' ') ^ find_most_frequent(str2)))
+str2 = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
+print (single_byte_xor(str2, chr(ord(' ') ^ find_most_frequent(str2))))
