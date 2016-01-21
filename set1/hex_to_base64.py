@@ -17,6 +17,7 @@ def sixete_to_base64(six):
 	return unichr(42)#*
 
 def base64_to_sixete(b64):
+  b64 = ord(b64)
   if (b64 == 43):#+
 	return format(62, '06b')
   elif (b64 == 47):#/
@@ -30,7 +31,7 @@ def base64_to_sixete(b64):
   elif (b64 < 123):#a-z
 	return format(b64 - 71, '06b')
   else:
-	return 'not a base64 char'
+	return b64 + ' is not a base64 char'
 
 def hex_to_base64(hex_string):
   retVal = ''
@@ -63,8 +64,23 @@ def hex_to_base64(hex_string):
 		+ sixete_to_base64(d))
 
   return retVal
+def base64_to_string(b64_str):
+    bin_str = ''
+    res = ''
+
+    for c in b64_str:
+        bin_str += base64_to_sixete(c)
+
+    while (len(bin_str) > 8):
+        print len(bin_str)
+        res += chr(int(bin_str[:8], 2))
+        bin_str = bin_str[(len(bin_str)-8):]
+
+    return res
 
 
+hex_str = '49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d'
+print hex_to_base64(hex_str)
+b64_str = 'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t'
+print base64_to_string(b64_str)
 
-
-print hex_to_base64('49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d')
