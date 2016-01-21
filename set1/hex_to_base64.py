@@ -18,6 +18,7 @@ def sixete_to_base64(six):
 
 def base64_to_sixete(b64):
   b64 = ord(b64)
+
   if (b64 == 43):#+
 	return format(62, '06b')
   elif (b64 == 47):#/
@@ -37,22 +38,20 @@ def hex_to_base64(hex_string):
   retVal = ''
   ba = bytearray(hex_string.decode("hex"))
   i=0
+
   while (i < len(ba)):
     a = (ba[i] >> 2)
     b = (ba[i] & 3) << 4
-
     # 3 bytes to the end
     if ((i+2) < len(ba)):
       b |= (ba[i+1] >> 4)
       c = ((ba[i+1] & 15) << 2) | (ba[i+2] >> 6)
       d = ba[i+2] & 63
-
     # 2 bytes to the end
     elif ((i+1) < len(ba)):
       b |= (ba[i+1] >> 4)
       c = ((ba[i+1] & 15) << 2)
       d = '='
-
     # 1 byte to the end
     else:
       c = '='
@@ -64,6 +63,7 @@ def hex_to_base64(hex_string):
 		+ sixete_to_base64(d))
 
   return retVal
+
 def base64_to_string(b64_str):
     bin_str = ''
     res = ''
@@ -71,16 +71,19 @@ def base64_to_string(b64_str):
     for c in b64_str:
         bin_str += base64_to_sixete(c)
 
-    while (len(bin_str) > 8):
-        print len(bin_str)
+    while (bin_str):
         res += chr(int(bin_str[:8], 2))
-        bin_str = bin_str[(len(bin_str)-8):]
+        if(len(bin_str)>=8):
+            bin_str = bin_str[8:]
+        else:
+            bin_str = None
 
     return res
 
 
+'''
 hex_str = '49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d'
 print hex_to_base64(hex_str)
 b64_str = 'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t'
 print base64_to_string(b64_str)
-
+'''

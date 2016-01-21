@@ -1,18 +1,14 @@
 # single byte xor cipher
 
-def single_byte_xor(str1, char):
-  retVal = ''
-  ba1 = bytearray(str1.decode("hex"))
-
+def single_byte_xor(ba1, char):
+  resBa = bytearray()
   for b in ba1:
-      retVal += chr(b ^ ord(char))
+      resBa.append(b ^ char)
 
-  return retVal
+  return resBa
 
-def find_most_frequent(str1):
-    ba1 = bytearray(str1.decode('hex'))
+def find_most_frequent(ba1):
     d = {}
-
     for b in ba1:
       d[b] = 0
 
@@ -22,5 +18,5 @@ def find_most_frequent(str1):
     f = sorted(d, key=d.get)
     return f[len(f)-1]
 
-str2 = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
-print (single_byte_xor(str2, chr(ord(' ') ^ find_most_frequent(str2))))
+#str2 = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
+#print (single_byte_xor(str2, chr(ord(' ') ^ find_most_frequent(str2))))

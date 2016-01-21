@@ -1,5 +1,9 @@
 # Break repeating-key XOR
 
+import hex_to_base64
+import detect_single_char_xor as scx
+
+
 def count_bits(byte):
     #return bin(byte).count('1')
     byte = (byte & 0x55) + ((byte >> 1) & 0x55)
@@ -29,26 +33,37 @@ def guess_key_size(str1):
 
     averaged_distances[s] = float(get_distance(s1, s2)) / float(s)
 
-  return sorted(averaged_distances, key=averaged_distances.get)[:2]
+  return sorted(averaged_distances, key=averaged_distances.get)[:3]
 
 
 def break_repeating_xor(file1):
-    res = ''
+    res = []
     f = open(file1)
-    key_size = guess_key_size(f.read()[:90])
+    line = hex_to_base64.base64_to_string(f.read()[:80])
+    print len(line)
+    print line
+    key_size = guess_key_size(line)[0]
     f.close()
     blocks = []
 
     for l in open(file1):
-      blocks += bytearray(l)
+      ba1 = bytearray(hex_to_base64.base64_to_string(l))
 
+      while (len(ba1[:key_size]) == key_size):
+        blocks.append(ba1[:key_size])
+        ba1 = ba1[key_size:]
 
+      if (len(blocks) > 5000):
+        break
 
+    blocks_t =  map(list, zip(*blocks))
 
+    for ba in blocks_t:
+      res.append(scx.xor_most_frequent(ba) + '\n')
 
     return res
 
 
 
-print break_repeating_xor('C:/Users/niv.caspi/Projects/matassano/set1/6.txt')
-
+break_repeating_xor('C:/Users/niv.caspi/Projects/matassano/set1/6.txt')
+#print get_distance('this is a test', 'wokka wokka!!!')
