@@ -5,7 +5,8 @@ import single_byte_xor as sbx
 
 def xor_most_frequent(ba1):
   most_frequent = sbx.find_most_frequent(ba1)
-  key = 32 ^ most_frequent
+  #key = 32 ^ most_frequent
+  key = ord('e') ^ most_frequent
 
   return sbx.single_byte_xor(ba1, key)
 
