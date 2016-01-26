@@ -3,10 +3,10 @@
 import single_byte_xor as sbx
 
 
-def xor_most_frequent(ba1):
+def xor_most_frequent(ba1, char=32):
   most_frequent = sbx.find_most_frequent(ba1)
   #key = 32 ^ most_frequent
-  key = ord('e') ^ most_frequent
+  key = char ^ most_frequent
 
   return sbx.single_byte_xor(ba1, key)
 
